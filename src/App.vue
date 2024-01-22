@@ -1,5 +1,14 @@
 <template>
-	<h1 class="text-3xl font-bold underline">
-		Hello world!
-	</h1>
+	<app-header></app-header>
 </template>
+
+<script>
+import AppHeader from "./components/AppHeader.vue";
+
+export default {
+	name: 'App',
+	components: {
+		AppHeader
+	}
+};
+</script>
