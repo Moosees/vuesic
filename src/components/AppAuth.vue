@@ -24,15 +24,19 @@
 					<!-- Tabs -->
 					<ul class="flex flex-wrap mb-4">
 						<li class="flex-auto text-center">
-							<a class="block rounded py-3 px-4 transition hover:text-white text-white bg-blue-600" href="#">Login</a>
+							<a class="block rounded py-3 px-4 transition " href="#"
+								:class="{ 'hover:text-white text-white bg-blue-600': currentTab === 'login', 'hover:text-blue': currentTab === 'register' }"
+								@click.prevent="currentTab = 'login'">Login</a>
 						</li>
 						<li class="flex-auto text-center">
-							<a class="block rounded py-3 px-4 transition" href="#">Register</a>
+							<a class="block rounded py-3 px-4 transition" href="#"
+								:class="{ 'hover:text-white text-white bg-blue-600': currentTab === 'register', 'hover:text-blue': currentTab === 'login' }"
+								@click.prevent="currentTab = 'register'">Register</a>
 						</li>
 					</ul>
 
 					<!-- Login Form -->
-					<form>
+					<form v-show="currentTab === 'login'">
 						<!-- Email -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Email</label>
@@ -53,7 +57,7 @@
 						</button>
 					</form>
 					<!-- Registration Form -->
-					<form>
+					<form v-show="currentTab === 'register'">
 						<!-- Name -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Name</label>
@@ -120,6 +124,9 @@ import { useModalStore } from "../stores/modal.js";
 
 export default {
 	name: 'AppAuth',
+	data() {
+		return { currentTab: 'login' };
+	},
 	computed: {
 		...mapState(useModalStore, ['hiddenClass']),
 		// ...mapWritableState(useModalStore, 'isOpen')
