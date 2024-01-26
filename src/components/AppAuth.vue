@@ -69,44 +69,53 @@
 						<!-- Email -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Email</label>
-							<input type="email"
+							<vee-field type="email"
 								class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-								placeholder="Enter Email" />
+								placeholder="Enter Email" name="email" />
+							<vee-error class="text-red-600" name="email" />
 						</div>
 						<!-- Age -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Age</label>
-							<input type="number"
-								class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded" />
+							<vee-field type="number"
+								class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
+								name="age" />
+							<vee-error class="text-red-600" name="age" />
 						</div>
 						<!-- Password -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Password</label>
-							<input type="password"
+							<vee-field type="password"
 								class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-								placeholder="Password" />
+								placeholder="Password" name="password" />
+							<vee-error class="text-red-600" name="password" />
 						</div>
 						<!-- Confirm Password -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Confirm Password</label>
-							<input type="password"
+							<vee-field type="password"
 								class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-								placeholder="Confirm Password" />
+								placeholder="Confirm Password" name="confirm_password" />
+							<vee-error class="text-red-600" name="confirm_password" />
 						</div>
 						<!-- Country -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Country</label>
-							<select
-								class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded">
+							<vee-field as="select"
+								class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
+								name="country">
 								<option value="USA">USA</option>
 								<option value="Mexico">Mexico</option>
 								<option value="Germany">Germany</option>
-							</select>
+								<option value="Atlantis">Atlantis</option>
+							</vee-field>
+							<vee-error class="text-red-600" name="country" />
 						</div>
 						<!-- TOS -->
 						<div class="mb-3 pl-6">
-							<input type="checkbox" class="w-4 h-4 float-left -ml-6 mt-1 rounded" />
+							<vee-field type="checkbox" class="w-4 h-4 float-left -ml-6 mt-1 rounded" value="true" name="tos" />
 							<label class="inline-block">Accept terms of service</label>
+							<vee-error class="text-red-600 block" name="tos" />
 						</div>
 						<button type="submit"
 							class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700">
@@ -126,7 +135,17 @@ import { useModalStore } from "../stores/modal.js";
 export default {
 	name: 'AppAuth',
 	data() {
-		return { currentTab: 'login', schema: { name: 'required', email: '', age: '', password: '', confirm_password: '', country: '', tos: '' } };
+		return {
+			currentTab: 'login', schema: {
+				name: 'required|min:3|max:50|alpha_spaces',
+				email: 'required|max:50|email',
+				age: 'required|min_value:18|max_value:150',
+				password: 'required|min:6|max:50',
+				confirm_password: 'confirmed:@password',
+				country: 'required|not_one_of:Atlantis,USA',
+				tos: 'required'
+			}
+		};
 	},
 	computed: {
 		...mapState(useModalStore, ['hiddenClass']),
