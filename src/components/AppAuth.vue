@@ -57,13 +57,14 @@
 						</button>
 					</form>
 					<!-- Registration Form -->
-					<form v-show="currentTab === 'register'">
+					<vee-form v-show="currentTab === 'register'" :validation-schema="schema">
 						<!-- Name -->
 						<div class="mb-3">
 							<label class="inline-block mb-2">Name</label>
-							<input type="text"
+							<vee-field type="text"
 								class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-								placeholder="Enter Name" />
+								placeholder="Enter Name" name="name" />
+							<vee-error class="text-red-600" name="name" />
 						</div>
 						<!-- Email -->
 						<div class="mb-3">
@@ -111,7 +112,7 @@
 							class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700">
 							Submit
 						</button>
-					</form>
+					</vee-form>
 				</div>
 			</div>
 		</div>
@@ -125,7 +126,7 @@ import { useModalStore } from "../stores/modal.js";
 export default {
 	name: 'AppAuth',
 	data() {
-		return { currentTab: 'login' };
+		return { currentTab: 'login', schema: { name: 'required', email: '', age: '', password: '', confirm_password: '', country: '', tos: '' } };
 	},
 	computed: {
 		...mapState(useModalStore, ['hiddenClass']),
